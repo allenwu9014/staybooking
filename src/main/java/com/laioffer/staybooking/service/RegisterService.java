@@ -34,9 +34,10 @@ public class RegisterService {
 
     // the @Transactional annotation, it will make the insert operations to user
     // and authority tables will succeed together, or fail together.
+    // two save operations will success both or both not
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void add(User user, UserRole role) throws UserAlreadyExistException {
-        if (userRepository.existsById(user.getUsername())) {
+        if (userRepository.findById(user.getUsername()) != null) {
             throw new UserAlreadyExistException("User already exists");
         }
         // for encrypted password

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuthorityRepository extends JpaRepository<Authority, String> {
-
+// JPA: a framework like hibernate
 }

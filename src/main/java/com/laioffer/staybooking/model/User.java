@@ -59,6 +59,11 @@ public class User implements Serializable {
     }
 
     // builder class
+    // benefit: suitable for coding without mistake
+    // Builder builder = new Builder();
+    // builder.set();
+    // User user = builder.build();
+
     public static class Builder {
         @JsonProperty("username")
         private String username;
