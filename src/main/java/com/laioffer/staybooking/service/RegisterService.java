@@ -37,7 +37,7 @@ public class RegisterService {
     // two save operations will success both or both not
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void add(User user, UserRole role) throws UserAlreadyExistException {
-        if (userRepository.findById(user.getUsername()) != null) {
+        if (userRepository.existsById(user.getUsername())) {
             throw new UserAlreadyExistException("User already exists");
         }
         // for encrypted password
