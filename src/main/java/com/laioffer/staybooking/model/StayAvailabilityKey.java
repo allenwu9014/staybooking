@@ -8,6 +8,8 @@ import java.util.Objects;
 
 @Embeddable
 public class StayAvailabilityKey implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Long stay_id;
     private LocalDate date;
 

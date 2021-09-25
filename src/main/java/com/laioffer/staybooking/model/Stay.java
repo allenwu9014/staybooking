@@ -2,11 +2,15 @@ package com.laioffer.staybooking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+@Entity
+@Table(name = "stay")
+@JsonDeserialize(builder = Stay.Builder.class)
 public class Stay implements Serializable {
     private static final long serialVersionUID = 1L;
 

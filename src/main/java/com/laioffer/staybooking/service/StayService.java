@@ -30,7 +30,11 @@ public class StayService {
         LocalDate date = LocalDate.now().plusDays(1);
         List<StayAvailability> availabilities = new ArrayList<>();
         for (int i = 0; i < 30; ++i) {
-            availabilities.add(new StayAvailability.Builder().setId(new StayAvailabilityKey(stay.getId(), date)).setStay(stay).setState(StayAvailabilityState.AVAILABLE).build());
+            availabilities.add(
+                    new StayAvailability.Builder()
+                    .setId(new StayAvailabilityKey(stay.getId(), date))
+                    .setStay(stay)
+                    .setState(StayAvailabilityState.AVAILABLE).build());
             date = date.plusDays(1);
         }
         stay.setAvailabilities(availabilities);
