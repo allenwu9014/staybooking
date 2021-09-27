@@ -32,6 +32,10 @@ public class Stay implements Serializable {
     @OneToMany(mappedBy = "stay", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     private List<StayAvailability> availabilities;
 
+    @OneToMany(mappedBy = "stay", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    private List<StayImage> images;
+
+
     public Stay() {
     }
 
@@ -43,6 +47,8 @@ public class Stay implements Serializable {
         this.guestNumber = builder.guestNumber;
         this.host = builder.host;
         this.availabilities = builder.availabilities;
+        this.images = builder.images;
+
     }
 
     public Long getId() {
@@ -78,6 +84,17 @@ public class Stay implements Serializable {
         return this;
     }
 
+    public List<StayImage> getImages() {
+        return images;
+    }
+
+    public Stay setImages(List<StayImage> images) {
+        this.images = images;
+        return this;
+    }
+
+
+
     public static class Builder {
 
         @JsonProperty("id")
@@ -100,6 +117,10 @@ public class Stay implements Serializable {
 
         @JsonProperty("availabilities")
         private List<StayAvailability> availabilities;
+
+        @JsonProperty("images")
+        private List<StayImage> images;
+
 
         public Builder setId(Long id) {
             this.id = id;
@@ -133,6 +154,11 @@ public class Stay implements Serializable {
 
         public Builder setAvailabilities(List<StayAvailability> availabilities) {
             this.availabilities = availabilities;
+            return this;
+        }
+
+        public Builder setImages(List<StayImage> images) {
+            this.images = images;
             return this;
         }
 

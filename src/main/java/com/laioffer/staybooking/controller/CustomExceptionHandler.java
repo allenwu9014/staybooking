@@ -1,5 +1,6 @@
 package com.laioffer.staybooking.controller;
 
+import com.laioffer.staybooking.exception.GCSUploadException;
 import com.laioffer.staybooking.exception.UserAlreadyExistException;
 import com.laioffer.staybooking.exception.UserNotExistException;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,11 @@ public class CustomExceptionHandler {
     @ExceptionHandler(UserNotExistException.class)
     public final ResponseEntity<String> handleUserNotExistExceptions(Exception ex, WebRequest request) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(GCSUploadException.class)
+    public final ResponseEntity<String> handleGCSUploadExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

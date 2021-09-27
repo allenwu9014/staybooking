@@ -33,6 +33,7 @@ public class User implements Serializable {
 
 
     public String getUsername() {
+
         return username;
     }
     public User setUsername(String username) {
