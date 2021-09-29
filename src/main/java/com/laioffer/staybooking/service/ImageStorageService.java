@@ -34,6 +34,7 @@ public class ImageStorageService {
            throw new GCSUploadException("Failed to load GCP credentials");
         }
 
+        // connect to GCS, return a storage like a session in DB
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
 
         String filename = UUID.randomUUID().toString();
