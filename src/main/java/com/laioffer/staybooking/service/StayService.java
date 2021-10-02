@@ -1,6 +1,7 @@
 package com.laioffer.staybooking.service;
 
 import com.laioffer.staybooking.model.*;
+import com.laioffer.staybooking.repository.LocationRepository;
 import com.laioffer.staybooking.repository.StayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,20 @@ public class StayService {
 
     private StayRepository stayRepository;
     private ImageStorageService imageStorageService;
+    private LocationRepository locationRepository;
+    private GeoEncodingService geoEncodingService;
+
+
+
 
     @Autowired
-    public StayService(StayRepository stayRepository,  ImageStorageService imageStorageService) {
+    public StayService(StayRepository stayRepository, LocationRepository locationRepository,
+                       GeoEncodingService geoEncodingService,
+                       ImageStorageService imageStorageService) {
         this.stayRepository = stayRepository;
+        this.locationRepository = locationRepository;
         this.imageStorageService = imageStorageService;
+        this.geoEncodingService = geoEncodingService;
     }
     public List<Stay> listByUser(String username) {
         return stayRepository.findByHost(new User.Builder().setUsername(username).build());
@@ -55,6 +65,9 @@ public class StayService {
 
 
         stayRepository.save(stay);
+        Location location = geoEncodingService.getLatLng(stay.getId(), stay.getAddress());
+        locationRepository.save(location);
+
     }
 
     public void delete(Long stayId) {

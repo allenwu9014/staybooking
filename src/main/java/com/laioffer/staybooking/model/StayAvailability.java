@@ -13,7 +13,7 @@ import java.io.Serializable;
 @JsonDeserialize(builder = StayAvailability.Builder.class)
 public class StayAvailability implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    // 组合件 pk
     @EmbeddedId
     private StayAvailabilityKey id;
 
