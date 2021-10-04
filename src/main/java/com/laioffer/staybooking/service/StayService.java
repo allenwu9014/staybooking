@@ -1,5 +1,6 @@
 package com.laioffer.staybooking.service;
 
+import com.laioffer.staybooking.exception.StayDeleteException;
 import com.laioffer.staybooking.model.*;
 import com.laioffer.staybooking.repository.LocationRepository;
 import com.laioffer.staybooking.repository.StayRepository;
@@ -20,18 +21,21 @@ public class StayService {
     private ImageStorageService imageStorageService;
     private LocationRepository locationRepository;
     private GeoEncodingService geoEncodingService;
-
+    private ReservationRepository reservationRepository;
 
 
 
     @Autowired
     public StayService(StayRepository stayRepository, LocationRepository locationRepository,
                        GeoEncodingService geoEncodingService,
+                       ReservationRepository reservationRepository,
                        ImageStorageService imageStorageService) {
         this.stayRepository = stayRepository;
         this.locationRepository = locationRepository;
         this.imageStorageService = imageStorageService;
         this.geoEncodingService = geoEncodingService;
+        this.reservationRepository = reservationRepository;
+
     }
     public List<Stay> listByUser(String username) {
         return stayRepository.findByHost(new User.Builder().setUsername(username).build());
@@ -70,7 +74,12 @@ public class StayService {
 
     }
 
-    public void delete(Long stayId) {
+    public void delete(Long stayId) throws StayDeleteException {
+        List<Reservation> reservations = reservationRepository.findByStayAndCheckoutDateAfter(new Stay.Builder().setId(stayId).build(), LocalDate.now());
+        if (reservations != null && reservations.size() > 0) {
+            throw new StayDeleteException("Cannot delete stay with active reservation");
+        }
+
         stayRepository.deleteById(stayId);
     }
 }
